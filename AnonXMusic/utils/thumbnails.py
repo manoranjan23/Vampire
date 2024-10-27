@@ -29,8 +29,6 @@ async def get_thumb(videoid, user_id):
 
         # Open the provided template image
         template_img = Image.open(TEMPLATE_PATH).convert("RGBA")
-
-        # Add text to the template image
         draw = ImageDraw.Draw(template_img)
         font = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 45)
         arial_font = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 30)
@@ -48,6 +46,41 @@ async def get_thumb(videoid, user_id):
         text_w, _ = draw.textsize(duration_text, font=arial_font)
         draw.text(((template_img.width - text_w) / 2, y_text + 50), duration_text, fill="white", font=arial_font)
 
+        # Draw central circle with video ID
+        circle_center_x, circle_center_y = template_img.width // 2, 200  # Adjust position as needed
+        outer_radius = 100
+        inner_radius = 30
+
+        # Outer circle
+        draw.ellipse(
+            (circle_center_x - outer_radius, circle_center_y - outer_radius,
+             circle_center_x + outer_radius, circle_center_y + outer_radius),
+            outline="white", width=5
+        )
+
+        # Video ID in the center of the circle
+        videoid_font = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 20)
+        videoid_text_w, videoid_text_h = draw.textsize(videoid, font=videoid_font)
+        draw.text(
+            (circle_center_x - videoid_text_w // 2, circle_center_y - videoid_text_h // 2),
+            videoid, fill="white", font=videoid_font
+        )
+
+        # Inner circle for user ID
+        draw.ellipse(
+            (circle_center_x - inner_radius, circle_center_y - inner_radius,
+             circle_center_x + inner_radius, circle_center_y + inner_radius),
+            fill="white"
+        )
+
+        # User ID in the smaller circle
+        userid_font = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 15)
+        userid_text_w, userid_text_h = draw.textsize(str(user_id), font=userid_font)
+        draw.text(
+            (circle_center_x - userid_text_w // 2, circle_center_y - userid_text_h // 2),
+            str(user_id), fill="black", font=userid_font
+        )
+
         # Save the final thumbnail
         template_img.save(thumbnail_file)
         return thumbnail_file
@@ -55,4 +88,6 @@ async def get_thumb(videoid, user_id):
     except Exception as e:
         print(f"Error generating thumbnail: {e}")
         return YOUTUBE_IMG_URL
+
+
 
