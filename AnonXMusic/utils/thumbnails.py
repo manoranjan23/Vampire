@@ -264,10 +264,10 @@ async def que_thumb(videoid, user_id):
         background.paste(image3, (0, 0), mask=image3)
         img = ImageOps.expand(background, border=10, fill=f"{border}")
         draw = ImageDraw.Draw(img)
-        font = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 45)
+        font = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 30)
         ImageFont.truetype("AnonXMusic/assets/font2.ttf", 70)
-        arial = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 30)
-        ImageFont.truetype("AnonXMusic/assets/font.ttf", 30)
+        arial = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 40)
+        ImageFont.truetype("AnonXMusic/assets/font.ttf", 35)
         para = textwrap.wrap(title, width=32)
         try:
             draw.text(
