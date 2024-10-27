@@ -1,6 +1,7 @@
 import os
 import re
 import textwrap
+import random
 import aiofiles
 import aiohttp
 from PIL import Image, ImageDraw, ImageFont
@@ -8,8 +9,9 @@ from youtubesearchpython.__future__ import VideosSearch
 from AnonXMusic import app
 from config import YOUTUBE_IMG_URL
 
-# Path to the template thumbnail image you provided
+# Paths to template and images of girls
 TEMPLATE_PATH = "/mnt/data/file-A4qEDjTAjflCH5OetMOGpV8R"
+GIRLS_IMAGES_PATH = "AnonXMusic/assets/girls"
 
 async def get_thumb(videoid, user_id):
     # Generate unique filename for the thumbnail
@@ -80,6 +82,18 @@ async def get_thumb(videoid, user_id):
             (circle_center_x - userid_text_w // 2, circle_center_y - userid_text_h // 2),
             str(user_id), fill="black", font=userid_font
         )
+
+        # Randomly select two images of girls
+        girl_images = [img for img in os.listdir(GIRLS_IMAGES_PATH) if img.endswith(('.png', '.jpg', '.jpeg'))]
+        if len(girl_images) >= 2:
+            left_girl_img = Image.open(os.path.join(GIRLS_IMAGES_PATH, random.choice(girl_images))).resize((150, 150))
+            right_girl_img = Image.open(os.path.join(GIRLS_IMAGES_PATH, random.choice(girl_images))).resize((150, 150))
+
+            # Paste left girl image
+            template_img.paste(left_girl_img, (circle_center_x - 300, circle_center_y - 75), left_girl_img)
+
+            # Paste right girl image
+            template_img.paste(right_girl_img, (circle_center_x + 150, circle_center_y - 75), right_girl_img)
 
         # Save the final thumbnail
         template_img.save(thumbnail_file)
