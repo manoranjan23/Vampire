@@ -11,13 +11,13 @@ from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter, ImageFo
 from youtubesearchpython.__future__ import VideosSearch
 
 from config import YOUTUBE_IMG_URL
-from AnonX import app
+from AnonXMusic import app
 
 # Background options for random selection
 BACKGROUND_OPTIONS = [
-    "AnonX/assets/anonx.png",
-    "AnonX/assets/bg1.png",
-    "AnonX/assets/bg2.png",
+    "AnonXMusic/assets/anonx.png",
+    "AnonXMusic/assets/bg1.png",
+    "AnonXMusic/assets/bg2.png",
     # Add more paths as needed
 ]
 
@@ -117,8 +117,8 @@ async def gen_thumb(videoid, user_id):
         background.paste(image3, (0, 0), mask=image3)
 
         draw = ImageDraw.Draw(background)
-        font = ImageFont.truetype("AnonX/assets/font2.ttf", 45)
-        arial = ImageFont.truetype("AnonX/assets/font2.ttf", 30)
+        font = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 45)
+        arial = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 30)
         para = textwrap.wrap(title, width=32)
         try:
             draw.text(
